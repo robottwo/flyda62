@@ -29,3 +29,4 @@ npm-debug.log*
 # Environment variables
 .env
 .env.local
+CI-CD-STATUS.md
