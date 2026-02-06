@@ -1,0 +1,31 @@
+# Planning and internal documentation
+MODERN-REDESIGN-PLAN.md
+PHASE-*.md
+REDESIGN-COMPLETE.md
+DEPLOYMENT-STATUS.md
+PROJECT-SUMMARY.md
+CHECKLIST.md
+
+# Backup files
+backup/
+index-original.html
+index-v2.html
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
