@@ -534,7 +534,7 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-gold mr-2">✓</span>
-                            <span>Insurance & hangar</span>
+                            <span>Hangar & storage</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-gold mr-2">✓</span>
@@ -575,7 +575,7 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-aviation-blue mr-2 font-bold">✓</span>
-                            <span>Insurance & hangar</span>
+                            <span>Hangar & storage</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-aviation-blue mr-2 font-bold">✓</span>
@@ -613,7 +613,7 @@
                         </li>
                         <li class="flex items-start">
                             <span class="text-gold mr-2">✓</span>
-                            <span>Insurance & hangar</span>
+                            <span>Hangar & storage</span>
                         </li>
                         <li class="flex items-start">
                             <span class="text-gold mr-2">✓</span>
@@ -633,10 +633,6 @@
                         </div>
                         <div class="flex items-start">
                             <span class="text-gold mr-2 text-xl">✓</span>
-                            <span>Full insurance coverage</span>
-                        </div>
-                        <div class="flex items-start">
-                            <span class="text-gold mr-2 text-xl">✓</span>
                             <span>Hangar & tie-down fees</span>
                         </div>
                         <div class="flex items-start">
@@ -651,10 +647,14 @@
                             <span class="text-gold mr-2 text-xl">✓</span>
                             <span>GPS database updates</span>
                         </div>
+                        <div class="flex items-start">
+                            <span class="text-gold mr-2 text-xl">✓</span>
+                            <span>Cleaning & detailing</span>
+                        </div>
                     </div>
                 </div>
                 <p class="text-gray-300 text-base">
-                    Fuel paid separately at pump price (~$90/hr at current Jet-A rates) · Additional hours available at $650/hr
+                    Fuel paid separately at pump price (~$90/hr at current Jet-A rates) · Additional hours available beyond package
                 </p>
             </div>
         </div>
@@ -747,8 +747,30 @@
                     </div>
                     
                     <div>
-                        <label class="block text-white font-semibold mb-2">Flying Background</label>
-                        <textarea name="background" rows="3" placeholder="Total hours, multi-engine time, ratings..." class="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gold"></textarea>
+                        <label class="block text-white font-semibold mb-3">Certificates & Ratings</label>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="certificate_private" value="Private Pilot" class="w-5 h-5 rounded border-white/30 bg-white/20 text-gold focus:ring-gold focus:ring-2">
+                                <span class="text-white">Private Pilot Certificate</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="certificate_commercial" value="Commercial Pilot" class="w-5 h-5 rounded border-white/30 bg-white/20 text-gold focus:ring-gold focus:ring-2">
+                                <span class="text-white">Commercial Pilot Certificate</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="rating_multiengine" value="Multi-Engine" class="w-5 h-5 rounded border-white/30 bg-white/20 text-gold focus:ring-gold focus:ring-2">
+                                <span class="text-white">Multi-Engine Rating</span>
+                            </label>
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" name="rating_instrument" value="Instrument" class="w-5 h-5 rounded border-white/30 bg-white/20 text-gold focus:ring-gold focus:ring-2">
+                                <span class="text-white">Instrument Rating</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-white font-semibold mb-2">Total Flight Hours</label>
+                        <input type="number" name="total_hours" placeholder="e.g. 250" class="w-full px-4 py-3 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-gold">
                     </div>
                     
                     <div>
