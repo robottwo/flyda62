@@ -34,6 +34,119 @@
     <style>
         html { scroll-behavior: smooth; }
         
+        /* Modern Typography */
+        h1, h2, h3, h4, h5, h6 {
+            text-wrap: balance;
+        }
+        
+        p, li {
+            text-wrap: pretty;
+        }
+        
+        /* Scroll-Driven Animations */
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Apply scroll-driven animations where supported */
+        @supports (animation-timeline: view()) {
+            .animate-on-scroll {
+                animation: fade-in-up linear both;
+                animation-timeline: view();
+                animation-range: entry 0% entry 40%;
+            }
+            
+            .animate-fade {
+                animation: fade-in linear both;
+                animation-timeline: view();
+                animation-range: entry 0% entry 30%;
+            }
+            
+            .animate-scale {
+                animation: scale-in linear both;
+                animation-timeline: view();
+                animation-range: entry 0% entry 35%;
+            }
+        }
+        
+        /* Fallback for browsers without scroll-driven animations */
+        @supports not (animation-timeline: view()) {
+            .animate-on-scroll,
+            .animate-fade,
+            .animate-scale {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+        }
+        
+        /* Container Queries for Pricing Cards */
+        @container pricing (max-width: 768px) {
+            .price-card {
+                padding: 1.5rem;
+            }
+            
+            .price-amount {
+                font-size: 2.5rem;
+            }
+        }
+        
+        .pricing-container {
+            container-type: inline-size;
+            container-name: pricing;
+        }
+        
+        /* Native Parallax Effect */
+        .parallax-section {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .parallax-bg {
+            position: absolute;
+            inset: -10%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            will-change: transform;
+        }
+        
+        @supports (animation-timeline: scroll()) {
+            .parallax-bg {
+                animation: parallax-scroll linear;
+                animation-timeline: scroll();
+                animation-range: 0% 100%;
+            }
+            
+            @keyframes parallax-scroll {
+                from { transform: translateY(-10%); }
+                to { transform: translateY(10%); }
+            }
+        }
+        
         /* Navigation Styles */
         nav {
             position: fixed;
@@ -235,9 +348,6 @@
 
     <!-- Full-Screen Hero Section -->
     <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
-
-    <!-- Full-Screen Hero Section -->
-    <section class="relative h-screen flex items-center justify-center overflow-hidden">
         <!-- Background Image -->
         <div class="absolute inset-0 z-0">
             <img src="assets/images/n520ra-1.jpg" alt="Diamond DA-62" class="w-full h-full object-cover">
@@ -278,12 +388,12 @@
         <div class="w-full grid md:grid-cols-2">
             <!-- Image Side -->
             <div class="relative h-96 md:h-auto">
-                <img src="assets/images/n520ra-2.jpg" alt="G1000 NXi Cockpit" class="w-full h-full object-cover">
+                <img src="assets/images/n520ra-2.jpg" alt="G1000 NXi Cockpit" loading="lazy" class="w-full h-full object-cover">
             </div>
             
             <!-- Content Side -->
             <div class="flex items-center justify-center p-8 md:p-16 lg:p-24 bg-aviation-blue text-white">
-                <div class="max-w-xl">
+                <div class="max-w-xl animate-on-scroll">
                     <h2 class="text-4xl md:text-5xl font-bold mb-6">
                         Cutting-Edge Avionics
                     </h2>
@@ -318,7 +428,7 @@
         <div class="w-full grid md:grid-cols-2">
             <!-- Content Side -->
             <div class="flex items-center justify-center p-8 md:p-16 lg:p-24 order-2 md:order-1">
-                <div class="max-w-xl">
+                <div class="max-w-xl animate-on-scroll">
                     <h2 class="text-4xl md:text-5xl font-bold mb-6 text-aviation-blue">
                         50% Fuel Savings
                     </h2>
@@ -348,17 +458,18 @@
             
             <!-- Image Side -->
             <div class="relative h-96 md:h-auto order-1 md:order-2">
-                <img src="assets/images/n520ra-4.jpg" alt="DA-62 Engines" class="w-full h-full object-cover">
+                <img src="assets/images/n520ra-4.jpg" alt="DA-62 Engines" loading="lazy" class="w-full h-full object-cover">
             </div>
         </div>
     </section>
 
     <!-- Pricing Section with Background -->
-    <section id="pricing" class="relative py-32 parallax" style="background-image: url('assets/images/hero-da62-flight.png');">
+    <section id="pricing" class="relative py-32 parallax-section">
+        <div class="parallax-bg" style="background-image: url('assets/images/hero-da62-flight.png');"></div>
         <div class="absolute inset-0 overlay-dark"></div>
         
         <div class="relative z-10 max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 animate-on-scroll">
                 <h2 class="text-4xl md:text-6xl font-bold text-white mb-4">
                     Transparent Pricing
                 </h2>
@@ -367,11 +478,11 @@
                 </p>
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="pricing-container grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                 <!-- 25 Hours -->
-                <div class="bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                <div class="price-card bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 hover:scale-105 animate-scale">
                     <div class="text-center mb-8">
-                        <div class="text-5xl font-black text-white mb-2">$650</div>
+                        <div class="price-amount text-5xl font-black text-white mb-2">$650</div>
                         <div class="text-lg text-gray-300">per hour</div>
                         <div class="text-3xl font-bold text-gold mt-6">25 Hours</div>
                         <div class="text-sm text-gray-400 mt-2">$16,250 total</div>
@@ -393,12 +504,12 @@
                 </div>
                 
                 <!-- 50 Hours (Popular) -->
-                <div class="bg-gold border-4 border-gold-dark rounded-2xl p-8 transform scale-105 shadow-2xl relative">
+                <div class="price-card bg-gold border-4 border-gold-dark rounded-2xl p-8 transform scale-105 shadow-2xl relative animate-scale">
                     <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-aviation-blue text-white px-4 py-1 rounded-full text-sm font-bold">
                         MOST POPULAR
                     </div>
                     <div class="text-center mb-8">
-                        <div class="text-5xl font-black text-aviation-dark mb-2">$625</div>
+                        <div class="price-amount text-5xl font-black text-aviation-dark mb-2">$625</div>
                         <div class="text-lg text-aviation-blue">per hour</div>
                         <div class="text-3xl font-bold text-aviation-dark mt-6">50 Hours</div>
                         <div class="text-sm text-aviation-blue mt-2">$31,250 total</div>
@@ -420,9 +531,9 @@
                 </div>
                 
                 <!-- 100 Hours -->
-                <div class="bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                <div class="price-card bg-white/10 backdrop-blur-md border-2 border-white/20 rounded-2xl p-8 hover:bg-white/20 transition-all duration-300 hover:scale-105 animate-scale">
                     <div class="text-center mb-8">
-                        <div class="text-5xl font-black text-white mb-2">$600</div>
+                        <div class="price-amount text-5xl font-black text-white mb-2">$600</div>
                         <div class="text-lg text-gray-300">per hour</div>
                         <div class="text-3xl font-bold text-gold mt-6">100 Hours</div>
                         <div class="text-sm text-gray-400 mt-2">$60,000 total</div>
@@ -455,7 +566,7 @@
     <!-- Photo Gallery - Expanded -->
     <section id="gallery" class="py-24 bg-white">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16">
+            <div class="text-center mb-16 animate-on-scroll">
                 <h2 class="text-4xl md:text-6xl font-bold text-aviation-blue mb-4">
                     See N520RA
                 </h2>
@@ -465,39 +576,39 @@
             </div>
             
             <!-- Gallery Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 animate-fade">
                 <div class="relative group overflow-hidden rounded-xl shadow-xl h-72">
-                    <img src="assets/images/n520ra-1.jpg" alt="Exterior" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="assets/images/n520ra-1.jpg" alt="Exterior" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <p class="text-white font-bold text-lg p-6">Exterior View</p>
                     </div>
                 </div>
                 <div class="relative group overflow-hidden rounded-xl shadow-xl h-72">
-                    <img src="assets/images/n520ra-2.jpg" alt="Cockpit" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="assets/images/n520ra-2.jpg" alt="Cockpit" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <p class="text-white font-bold text-lg p-6">G1000 NXi Cockpit</p>
                     </div>
                 </div>
                 <div class="relative group overflow-hidden rounded-xl shadow-xl h-72">
-                    <img src="assets/images/n520ra-3.jpg" alt="Interior" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="assets/images/n520ra-3.jpg" alt="Interior" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <p class="text-white font-bold text-lg p-6">Premium Interior</p>
                     </div>
                 </div>
                 <div class="relative group overflow-hidden rounded-xl shadow-xl h-72">
-                    <img src="assets/images/n520ra-4.jpg" alt="Engine" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="assets/images/n520ra-4.jpg" alt="Engine" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <p class="text-white font-bold text-lg p-6">Austro AE300 Engines</p>
                     </div>
                 </div>
                 <div class="relative group overflow-hidden rounded-xl shadow-xl h-72">
-                    <img src="assets/images/n520ra-5.jpg" alt="Detail" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="assets/images/n520ra-5.jpg" alt="Detail" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <p class="text-white font-bold text-lg p-6">Aircraft Detail</p>
                     </div>
                 </div>
                 <div class="relative group overflow-hidden rounded-xl shadow-xl h-72">
-                    <img src="assets/images/n520ra-6.jpg" alt="Profile" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <img src="assets/images/n520ra-6.jpg" alt="Profile" loading="lazy" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                         <p class="text-white font-bold text-lg p-6">Side Profile</p>
                     </div>
@@ -507,11 +618,12 @@
     </section>
 
     <!-- Contact Section with Background -->
-    <section id="contact" class="relative py-32 parallax" style="background-image: url('assets/images/n520ra-7.jpg');">
+    <section id="contact" class="relative py-32 parallax-section">
+        <div class="parallax-bg" style="background-image: url('assets/images/n520ra-7.jpg');"></div>
         <div class="absolute inset-0 bg-aviation-blue/90"></div>
         
         <div class="relative z-10 max-w-3xl mx-auto px-4">
-            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 md:p-12 shadow-2xl">
+            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-8 md:p-12 shadow-2xl animate-on-scroll">
                 <h2 class="text-4xl md:text-5xl font-bold text-white text-center mb-6">
                     Ready to Fly?
                 </h2>
