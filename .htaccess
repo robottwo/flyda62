@@ -1,0 +1,118 @@
+# FlyDA62.com Server Configuration
+# Apache .htaccess for performance optimization
+
+# ===== Force HTTPS =====
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# ===== Compression (Brotli preferred, Gzip fallback) =====
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/rss+xml image/svg+xml
+</IfModule>
+
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml application/rss+xml image/svg+xml
+</IfModule>
+
+# ===== Browser Caching =====
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # HTML (1 hour - can be updated frequently)
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # CSS and JavaScript (1 year - versioned filenames)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    
+    # Images (1 year - static content)
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # Fonts (1 year)
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+    
+    # Other
+    ExpiresByType application/json "access plus 0 seconds"
+    ExpiresByType application/xml "access plus 0 seconds"
+    ExpiresByType text/xml "access plus 0 seconds"
+</IfModule>
+
+# ===== Cache-Control Headers =====
+<IfModule mod_headers.c>
+    # HTML - short cache, must revalidate
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "public, max-age=3600, must-revalidate"
+    </FilesMatch>
+    
+    # CSS/JS - long cache (use versioned filenames to bust)
+    <FilesMatch "\.(css|js)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Images - long cache
+    <FilesMatch "\.(jpg|jpeg|png|webp|svg|ico)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Fonts - long cache
+    <FilesMatch "\.(woff|woff2|ttf|otf|eot)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Remove ETags (not needed with strong Cache-Control)
+    Header unset ETag
+    FileETag None
+    
+    # Security headers
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Service Worker MIME type
+    <FilesMatch "service-worker\.js$">
+        Header set Cache-Control "public, max-age=0, must-revalidate"
+        Header set Service-Worker-Allowed "/"
+    </FilesMatch>
+</IfModule>
+
+# ===== MIME Types =====
+<IfModule mod_mime.c>
+    # Web fonts
+    AddType font/woff woff
+    AddType font/woff2 woff2
+    
+    # Images
+    AddType image/webp webp
+    AddType image/svg+xml svg svgz
+    
+    # JavaScript
+    AddType application/javascript js
+    AddType application/json json
+    
+    # Manifest
+    AddType application/manifest+json webmanifest
+</IfModule>
+
+# ===== Performance & Security =====
+# Disable directory browsing
+Options -Indexes
+
+# Follow symbolic links
+Options +FollowSymLinks
+
+# Disable server signature
+ServerSignature Off
+
+# ===== Error Pages (Optional) =====
+# ErrorDocument 404 /404.html
+# ErrorDocument 500 /500.html

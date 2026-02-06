@@ -1,0 +1,27 @@
+{
+  "name": "FlyDA62 - Diamond DA-62 Dry Lease",
+  "short_name": "FlyDA62",
+  "description": "Diamond DA-62 dry lease at KFRG Republic Airport, NYC Metro. $650/hr with cutting-edge G1000 NXi avionics and 50% fuel savings.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#003366",
+  "theme_color": "#003366",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "travel"],
+  "lang": "en-US",
+  "dir": "ltr"
+}

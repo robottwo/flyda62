@@ -1,0 +1,11 @@
+# FlyDA62.com Robots Configuration
+
+User-agent: *
+Allow: /
+Disallow: /assets/icons/
+
+# Sitemap
+Sitemap: https://flyda62.com/sitemap.xml
+
+# Crawl delay (optional - be polite to smaller crawlers)
+Crawl-delay: 1

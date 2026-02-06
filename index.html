@@ -9,11 +9,25 @@
     <meta name="description" content="Fly the most advanced twin in the NYC area. Diamond DA-62 with G1000 NXi available for dry lease at KFRG Republic Airport. $650/hr, 50% better fuel efficiency than comparable twins.">
     <meta name="keywords" content="DA-62 rental NYC, Diamond twin lease Long Island, KFRG aircraft rental, multi-engine rental New York">
     
+    <!-- Mobile Optimization -->
+    <meta name="theme-color" content="#003366">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FlyDA62">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Preload Critical Assets -->
+    <link rel="preload" as="image" href="assets/images/n520ra-1.jpg" fetchpriority="high">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
     
     <script>
         tailwind.config = {
@@ -266,6 +280,18 @@
         /* Scroll offset for fixed header */
         section[id] {
             scroll-margin-top: 80px;
+        }
+        
+        /* Respect user's motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
         }
     </style>
 </head>
@@ -679,124 +705,132 @@
         </div>
     </footer>
 
-    <!-- Navigation JavaScript -->
+    <!-- Navigation & Performance JavaScript -->
     <script>
-        // Mobile Menu Toggle
+        'use strict';
+        
+        // ===== Performance Monitoring =====
+        if ('PerformanceObserver' in window) {
+            // Monitor Largest Contentful Paint (LCP)
+            const lcpObserver = new PerformanceObserver((list) => {
+                const entries = list.getEntries();
+                const lastEntry = entries[entries.length - 1];
+                console.log('[Performance] LCP:', lastEntry.renderTime || lastEntry.loadTime, 'ms');
+            });
+            lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
+            
+            // Monitor Cumulative Layout Shift (CLS)
+            let clsScore = 0;
+            const clsObserver = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                    if (!entry.hadRecentInput) {
+                        clsScore += entry.value;
+                    }
+                }
+                console.log('[Performance] CLS:', clsScore.toFixed(3));
+            });
+            clsObserver.observe({ entryTypes: ['layout-shift'] });
+        }
+        
+        // ===== Service Worker Registration =====
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('[Service Worker] Registered:', reg.scope))
+                    .catch(err => console.log('[Service Worker] Registration failed:', err));
+            });
+        }
+        
+        // ===== Mobile Menu =====
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const closeMobileMenuBtn = document.getElementById('closeMobileMenu');
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
         
-        function openMobileMenu() {
-            mobileMenu.classList.add('open');
-            mobileMenuBtn.classList.add('open');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeMobileMenuFn() {
-            mobileMenu.classList.remove('open');
-            mobileMenuBtn.classList.remove('open');
-            document.body.style.overflow = '';
-        }
+        const toggleMobileMenu = (open) => {
+            mobileMenu.classList.toggle('open', open);
+            mobileMenuBtn.classList.toggle('open', open);
+            document.body.style.overflow = open ? 'hidden' : '';
+        };
         
         mobileMenuBtn.addEventListener('click', () => {
-            if (mobileMenu.classList.contains('open')) {
-                closeMobileMenuFn();
-            } else {
-                openMobileMenu();
-            }
+            toggleMobileMenu(!mobileMenu.classList.contains('open'));
         });
         
-        closeMobileMenu.addEventListener('click', closeMobileMenuFn);
+        closeMobileMenuBtn.addEventListener('click', () => toggleMobileMenu(false));
         
-        // Close mobile menu when clicking a link
         mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                closeMobileMenuFn();
-            });
+            link.addEventListener('click', () => toggleMobileMenu(false));
         });
         
-        // Scroll Detection for Navigation Styling
+        // ===== Navigation Scroll Styling =====
         const nav = document.querySelector('nav');
-        let lastScroll = 0;
         
-        function handleNavScroll() {
-            const currentScroll = window.pageYOffset;
-            
-            if (currentScroll > 100) {
-                nav.classList.remove('transparent');
-                nav.classList.add('solid');
-            } else {
-                nav.classList.remove('solid');
-                nav.classList.add('transparent');
-            }
-            
-            lastScroll = currentScroll;
-        }
+        const updateNavStyle = () => {
+            const scrolled = window.pageYOffset > 100;
+            nav.classList.toggle('transparent', !scrolled);
+            nav.classList.toggle('solid', scrolled);
+        };
         
-        // Throttle scroll events for performance
-        let scrollTimeout;
+        let scrollRaf;
         window.addEventListener('scroll', () => {
-            if (scrollTimeout) {
-                window.cancelAnimationFrame(scrollTimeout);
-            }
-            scrollTimeout = window.requestAnimationFrame(handleNavScroll);
-        });
+            if (scrollRaf) cancelAnimationFrame(scrollRaf);
+            scrollRaf = requestAnimationFrame(updateNavStyle);
+        }, { passive: true });
         
-        // Active Section Detection using Intersection Observer
+        // ===== Active Section Detection =====
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-link, .mobile-menu-link');
-        
-        const observerOptions = {
-            root: null,
-            rootMargin: '-80px 0px -80% 0px',
-            threshold: 0
-        };
         
         const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const id = entry.target.id;
-                    
-                    // Update active state for all nav links
                     navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        const href = link.getAttribute('href');
-                        if (href === `#${id}`) {
-                            link.classList.add('active');
-                        }
+                        const isActive = link.getAttribute('href') === `#${id}`;
+                        link.classList.toggle('active', isActive);
                     });
                 }
             });
-        }, observerOptions);
-        
-        // Observe all sections
-        sections.forEach(section => {
-            sectionObserver.observe(section);
+        }, {
+            rootMargin: '-80px 0px -80% 0px',
+            threshold: 0
         });
         
-        // Smooth Scroll with View Transition API (if supported)
+        sections.forEach(section => sectionObserver.observe(section));
+        
+        // ===== Smooth Scroll =====
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', (e) => {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
+                const target = document.querySelector(anchor.getAttribute('href'));
                 
-                if (targetElement) {
-                    // Use View Transitions API if available
-                    if (document.startViewTransition) {
-                        document.startViewTransition(() => {
-                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        });
-                    } else {
-                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
+                if (!target) return;
+                
+                const scrollToTarget = () => {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                };
+                
+                // Use View Transitions API if supported
+                if (document.startViewTransition) {
+                    document.startViewTransition(scrollToTarget);
+                } else {
+                    scrollToTarget();
                 }
             });
         });
         
-        // Initialize nav state on page load
-        handleNavScroll();
+        // ===== Initialize =====
+        updateNavStyle();
+        
+        // Log initial page load performance
+        window.addEventListener('load', () => {
+            if (window.performance) {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                console.log('[Performance] Page Load:', perfData.loadEventEnd.toFixed(0), 'ms');
+                console.log('[Performance] DOM Interactive:', perfData.domInteractive.toFixed(0), 'ms');
+            }
+        });
     </script>
 
 </body>
