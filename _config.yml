@@ -36,6 +36,12 @@ exclude:
   - PHASE-3-COMPLETE.md
   - REDESIGN-COMPLETE.md
   - .gitignore
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+  - blog-post-ideas.md
+  - BLOG-USAGE.md
+  - JEKYLL-SETUP-COMPLETE.md
 
 # Plugins
 plugins:
