@@ -1,0 +1,53 @@
+# Jekyll Configuration for FlyDA62 Blog
+
+# Site settings
+title: FlyDA62 Blog
+description: Insights on Diamond DA-62 operations, multi-engine flying, and aviation in the NYC metro area
+url: "https://flyda62.com"
+baseurl: ""
+
+# Author
+author:
+  name: Delta Echo Aviation
+  email: robottwo@gmail.com
+
+# Build settings
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:day/:title/
+
+# Exclude from processing
+exclude:
+  - README.md
+  - DEPLOYMENT-GODADDY.md
+  - LUXURY-UPDATES.md
+  - LUXURY-MARKETING-CHANGES.md
+  - CI-CD-STATUS.md
+  - DEPLOYMENT-STATUS.md
+  - GITHUB-PAGES-SETUP.md
+  - MODERN-REDESIGN-PLAN.md
+  - PHASE-1-COMPLETE.md
+  - PHASE-2-COMPLETE.md
+  - PHASE-3-COMPLETE.md
+  - REDESIGN-COMPLETE.md
+  - .gitignore
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Delta Echo Aviation"
