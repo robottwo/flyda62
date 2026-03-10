@@ -172,6 +172,18 @@ Real costs, real surprises, real experiences:
 2. Bahamas NYE (lifestyle aspiration)
 3. TBM story (when ready)
 
+### What Is a Dry Lease? (And Why It Might Be the Smartest Way to Fly a DA-62)
+**Why:** Nobody explains dry leasing clearly for the GA audience. Most pilots associate "lease" with commercial aviation. Demystifying the model could convert prospects who don't know what they're being invited into.
+**Topics:**
+- What dry lease means (you are PIC, you have operational control, owner maintains aircraft)
+- How it differs from wet lease, charter, and flying club membership
+- The financial structure (block time, hourly rate, fuel separate)
+- What you're responsible for vs. what the owner handles
+- Insurance, checkout, and currency requirements
+- Why it works for 50-150 hr/year pilots
+- The Delta Echo model specifically
+**Status:** Ready to draft — no additional data needed from Dan
+
 ## Notes
 - Each post should include CTA to lease program
 - Link posts together (series, related content)
