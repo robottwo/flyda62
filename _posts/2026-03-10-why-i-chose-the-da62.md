@@ -137,6 +137,6 @@ Five years ago, I made that bet. I'm still cashing it out.
 
 ---
 
-*N520RA is available for dry lease at KFRG Republic Airport. If you're a multi-engine rated pilot in the New York area — or you're thinking about getting there — and you want to fly a modern DA-62 without the capital commitment of ownership, [let's talk](/#contact).*
+*N520RA is now based at KLNA (Lantana, FL), near Boca Raton, and available for dry lease in South Florida. If you're a multi-engine rated pilot — or you're thinking about getting there — and you want to fly a modern DA-62 without the capital commitment of ownership, [let's talk](/#contact).*
 
-*Daniel Eisner is the owner of N520RA, a Diamond DA-62 based at KFRG. When he's not flying, he's building businesses, raising four kids, and planning the next adventure.*
+*Daniel Eisner is the owner of N520RA, a Diamond DA-62 based in South Florida. When he's not flying, he's building businesses, raising four kids, and planning the next adventure.*

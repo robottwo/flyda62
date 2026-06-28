@@ -105,8 +105,8 @@ Build the life you want, not the one you think you're supposed to have. I bought
 
 Get good guidance. John Armstrong didn't just sell me a plane—he walked me through one of the hardest decisions I've ever made. Find people who will tell you the truth, not just what you want to hear.
 
-And if you're ready to experience what I've been living since 2020, [let's talk](/#contact). N520RA is available for lease, and I'd love to help someone else discover what's possible when you have your own wings.
+And if you're ready to experience what I've been living since 2020, [let's talk](/#contact). N520RA is available for lease in South Florida, and I'd love to help someone else discover what's possible when you have your own wings.
 
 ---
 
-*Daniel Eisner is the owner of N520RA, a Diamond DA-62 based at KFRG Republic Airport in New York. When he's not flying, he's building businesses, raising four kids, and planning the next adventure.*
+*Daniel Eisner is the owner of N520RA, a Diamond DA-62 now based at KLNA (Lantana, FL) in South Florida. When he's not flying, he's building businesses, raising four kids, and planning the next adventure.*
